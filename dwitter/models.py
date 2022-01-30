@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+#related_name is whether the other object is related to the selected model
+
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     follows = models.ManyToManyField(
