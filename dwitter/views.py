@@ -12,7 +12,11 @@ def dashboard(request):
             dweet.user = request.user
             dweet.save()
             return redirect("dwitter:dashboard")
-    return render(request,"dwitter/dashboard.html",{"form":form})
+    followed_dweet = Dweet.objects.filter(
+        user__profile__in=request.user.profile.follows.all()
+
+    ).order_by("-created_at")
+    return render(request,"dwitter/dashboard.html",{"form":form,"dweets":followed_dweet})
 
 def profile_list(request):
     profiles = Profile.objects.exclude(user=request.user)
